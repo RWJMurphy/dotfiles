@@ -3,7 +3,7 @@ srcdir=$HOME/dotfiles/src
 
 for file in $srcdir/.??*; do
     dest=$HOME/$(basename $file)
-    if [ "$file" = ".mac_bash_profile" ]; then
+    if [ "$(basename $file)" = ".mac_bash_profile" ]; then
         if [ "$(uname)" != "Darwin" ]; then
             echo "Not on a mac - not installing $file" >&2
             continue
