@@ -5,3 +5,5 @@
 [color]
     ui = auto
 
+[core]
+	quotepath = false
