@@ -17,3 +17,8 @@ alias ls='ls -AF'
 if [ -e $HOME/.mac_bash_profile ]; then
     . $HOME/.mac_bash_profile
 fi
+
+ddate_format="Today is %{%A, the %e of %B%}, %Y. %. %N%nCelebrate %H!"
+fortune_files="bofh-excuses definitions goedel hitchhiker magic tao ascii-art"
+
+cat <(ddate +"$ddate_format") <(echo) <(fortune $fortune_files) | cowsay -n
