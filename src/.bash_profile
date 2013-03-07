@@ -18,6 +18,8 @@ if [ -e $HOME/.mac_bash_profile ]; then
     . $HOME/.mac_bash_profile
 fi
 
+[ -e $HOME/.bash_functions ] && . $HOME/.bash_functions
+
 ddate_format="Today is %{%A, the %e of %B%}, %Y. %. %N%nCelebrate %H!"
 fortune_files="bofh-excuses definitions goedel hitchhiker magic tao ascii-art"
 
