@@ -1,5 +1,5 @@
 #!/bin/sh
-srcdir=$HOME/dotfiles/src
+srcdir=$HOME/code/dotfiles/src
 
 for file in $srcdir/.??*; do
     dest=$HOME/$(basename $file)
