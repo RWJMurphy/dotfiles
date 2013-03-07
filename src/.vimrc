@@ -1,21 +1,16 @@
 set nocompatible
+filetype plugin indent on
+syntax on
 
-set showcmd
-
-filetype on
-filetype plugin on
-syntax enable
+set backspace=indent,eol,start
 
 set autoindent
+set cindent
 
 set expandtab
 set smarttab
-
 set tabstop=4
 set shiftwidth=4
-
-set wildmenu
-set wildmode=list:longest,full
 
 set ignorecase
 set smartcase
@@ -23,4 +18,3 @@ set smartcase
 set incsearch
 set hlsearch
 
-highlight MatchParen ctermbg=4
