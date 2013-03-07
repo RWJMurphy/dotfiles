@@ -10,6 +10,7 @@ if [ "`id -u`" -eq 0 ]; then
 fi
 
 shopt -s cdspell histappend checkwinsize
+set -o vi
 
 alias ls='ls -AF'
 
