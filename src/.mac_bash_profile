@@ -1,6 +1,4 @@
 export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-if [ -f $(brew --prefix)/share/bash-completion/bash_completion ]; then
-    . $(brew --prefix)/share/bash-completion/bash_completion
-fi
+[ -f $(brew --prefix)/etc/bash_completion ] && . $(brew --prefix)/etc/bash_completion
 
 shopt -s nocaseglob
