@@ -1,23 +1,43 @@
 function mcd() {
-    cd=$(echo $1 | sed 's/\(.\)/\/\1*/g')/
-    dirs=`\ls -1d $cd 2>/dev/null`
-    dira=($dirs)
-    dircount=${#dira[*]}
-    if [[ $dircount == 0 ]]; then
-        echo "No match for ${cd}"
-    elif [[ $dircount == 1 ]]; then
-        echo cd ${dirs}
-        cd "${dirs}"
+    exit_code=1
+    [ $# == 0 ] && return $exit_code
+
+    shopt nocaseglob >/dev/null
+    nocase=$?
+    [ $nocase = 1 ] && shopt -s nocaseglob >/dev/null
+
+    magic=$(echo $1 | sed 's/\(.\)/\/\1*/g')/
+    declare -a directories=($(\ls -1d $magic 2>/dev/null))
+    directory_count=${#directories[*]}
+    if [[ ${directory_count} == 0 ]]; then
+        echo "No match for ${1}"
+        exit_code=1
+    elif [[ ${directory_count} == 1 ]]; then
+        echo cd ${magic}
+        cd ${magic}
+        exit_code=$?
     else
         if [ -z "$2" ]; then
             i=0
-            for dir in $dirs; do
+            for dir in "${directories[@]}"; do
                 echo $i $dir
                 let "i += 1"
             done;
+            exit_code=$i
         else
-            echo cd ${dira[$2]}
-            cd "${dira[$2]}"
+            echo cd ${directories[$2]}
+            cd ${directories[$2]}
+            exit_code=$?
         fi
+    fi
+    [ $nocase = 1 ] && shopt -u nocaseglob >/dev/null
+    return $exit_code
+}
+
+function ffind() {
+    if hash locate 2>/dev/null; then
+        locate -i "$@" | grep -E "^${PWD}"
+    else
+        echo "Requires locate, sorry :(" >&2
     fi
 }

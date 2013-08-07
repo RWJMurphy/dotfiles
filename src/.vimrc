@@ -17,4 +17,3 @@ set smartcase
 
 set incsearch
 set hlsearch
-
