@@ -41,3 +41,13 @@ function ffind() {
         echo "Requires locate, sorry :(" >&2
     fi
 }
+
+function syntax-json() {
+    while [[ $# > 0 ]]; do
+        result=$(jq . <$1 2>&1 >/dev/null)
+        if [ "$result" != "" ]; then
+            echo $1 - $result
+        fi
+        shift
+    done
+}
