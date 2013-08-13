@@ -17,3 +17,10 @@ set smartcase
 
 set incsearch
 set hlsearch
+
+set modeline
+set modelines=10
+
+" Filetypes
+autocmd BufNewFile,BufRead *.json set ft=javascript
+autocmd BufNewFile,BufRead *.md set ft=markdown
