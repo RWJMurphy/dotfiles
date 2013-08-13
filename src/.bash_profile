@@ -26,3 +26,5 @@ if [ "$(hostname)" == "www.reedmurphy.net" ]; then
 
     cat <(ddate +"$ddate_format") <(echo) <(fortune $fortune_files) | cowsay -n
 fi
+
+export AWS_CONFIG_FILE=~/.awsrc
