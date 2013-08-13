@@ -43,6 +43,8 @@ function ffind() {
     fi
 }
 
+# Syntax checks
+
 function syntax-json() {
     while [[ $# > 0 ]]; do
         result=$(jq . <$1 2>&1 >/dev/null)
@@ -51,4 +53,21 @@ function syntax-json() {
         fi
         shift
     done
+}
+
+function syntax-sh() {
+    exit_code=0
+    while [[ $# > 0 ]]; do
+        for shell in sh bash dash zsh; do
+            if hash $shell 2>/dev/null; then
+                errors=$($shell -n $1 2>&1)
+                if [ "$errors" != "" ]; then
+                    let exit_code++
+                    echo -e "$shell -n $1\n$errors"
+                fi
+            fi
+        done
+        shift
+    done
+    return $exit_code
 }
