@@ -1,3 +1,4 @@
+# vim: ft=sh sw=4 ts=4
 function mcd() {
     exit_code=1
     [ $# == 0 ] && return $exit_code
