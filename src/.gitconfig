@@ -1,9 +1,12 @@
 [user]
-	name = Reed Kraft-Murphy
+    name = Reed Kraft-Murphy
     email = reed@reedmurphy.net
 
 [color]
     ui = auto
 
 [core]
-	quotepath = false
+    quotepath = false
+
+[merge]
+    defaultToUpstream = true
