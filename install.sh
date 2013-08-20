@@ -1,23 +1,64 @@
-#!/bin/sh
-srcdir=$HOME/code/dotfiles/src
+#!/bin/bash
 
-for file in $srcdir/.??*; do
-    dest=$HOME/$(basename $file)
-    if [ "$(basename $file)" = ".mac_bash_profile" ]; then
-        if [ "$(uname)" != "Darwin" ]; then
-            echo "Not on a mac - not installing $file" >&2
+set -e
+set -u
+
+SRCDIR=$(cd "$(dirname "${0}")/src"; pwd -P)
+TIMESTAMP=$(date '+%Y%m%d-%H%M%S')
+
+warn() {
+    echo $* >&2
+}
+
+backup() {
+    while [[ "$#" ]]; do
+        backup_dest = $1.$TIMESTAMP
+        warn "Moving $1 to $backup_dest"
+        mv $1 $backup_dest
+        shift
+    done
+}
+
+find $SRCDIR -mindepth 1 -print | while read file; do
+    dest=${HOME}/${file#${SRCDIR}/}
+    basename=$(basename $file)
+    if [ -d $file ]; then
+        case $basename in
+            .git)
             continue
+            ;;
+            *)
+            ;;
+        esac
+
+        if [ -e $dest ]; then
+            if [ -d $dest ]; then
+                continue
+            else
+                backup $dest
+            fi
         fi
-    fi
-    if [ -e $dest ]; then
-        if [ -h $dest ]; then
-            echo "Not touching $dest - exists and is link" >&2
-            continue
-        else
-            bak=$dest.$(date '+%Y%m%d')
-            mv $dest $bak
-            echo "Moved existing $dest to $bak" >&2
+        mkdir -p $dest
+    elif [ -f $file ]; then
+        case $basename in
+            .mac_bash_profile)
+            if [ "$(uname)" != "Darwin" ]; then
+                warn "Not on a mac - not installing $file"
+                continue
+            fi
+            ;;
+            *)
+            ;;
+        esac
+
+        if [ -e $dest ]; then
+            if [ -h $dest ]; then
+                warn "Not touching $dest - exists and is link"
+                continue
+            else
+                backup $dest
+            fi
         fi
+        ln -s $file $dest
     fi
-    ln -s $file $HOME/$(basename $file)
 done
