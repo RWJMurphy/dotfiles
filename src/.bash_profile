@@ -31,6 +31,8 @@ fi
 
 [ -e $HOME/.bash_functions ] && . $HOME/.bash_functions
 
+[ -e /usr/local/opt/chruby/share/chruby/chruby.sh ] && . /usr/local/opt/chruby/share/chruby/chruby.sh
+
 # Finally, per-host stuff
 case "$(hostname -f)" in
     www.reedmurphy.net)
