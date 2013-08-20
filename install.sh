@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Be strict.
 set -e
 set -u
 
@@ -12,7 +13,7 @@ warn() {
 
 backup() {
     while [[ "$#" ]]; do
-        backup_dest = $1.$TIMESTAMP
+        backup_dest=$1.$TIMESTAMP
         warn "Moving $1 to $backup_dest"
         mv $1 $backup_dest
         shift
@@ -22,6 +23,8 @@ backup() {
 find $SRCDIR -mindepth 1 -print | while read file; do
     dest=${HOME}/${file#${SRCDIR}/}
     basename=$(basename $file)
+
+    # Directories
     if [ -d $file ]; then
         case $basename in
             .git)
@@ -32,6 +35,7 @@ find $SRCDIR -mindepth 1 -print | while read file; do
         esac
 
         if [ -e $dest ]; then
+            # Ignore directories that exist already
             if [ -d $dest ]; then
                 continue
             else
@@ -39,6 +43,8 @@ find $SRCDIR -mindepth 1 -print | while read file; do
             fi
         fi
         mkdir -p $dest
+
+    # Files
     elif [ -f $file ]; then
         case $basename in
             .mac_bash_profile)
@@ -52,8 +58,8 @@ find $SRCDIR -mindepth 1 -print | while read file; do
         esac
 
         if [ -e $dest ]; then
-            if [ -h $dest ]; then
-                warn "Not touching $dest - exists and is link"
+            # Ignore files that are linked correctly already
+            if [ -h $dest -a "$(readlink $dest)" == $file ]; then
                 continue
             else
                 backup $dest
