@@ -7,7 +7,7 @@ export VISUAL=vim
 
 # Per-host $PS1
 case "$(hostname -f)" in
-    shell01.*)
+    *.(eqx|gyr|).*)
     ;;
     *)
         PS1='\[\e[0;32m\]\u@\h:\[\e[1;34m\]\w \[\e[1;32m\]\$ \[\e[0;37m\]'
