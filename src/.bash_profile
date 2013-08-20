@@ -5,9 +5,16 @@ export EDITOR=vim
 export PATH=$HOME/bin:$PATH
 export VISUAL=vim
 
+# Shell options
+shopt -s cdspell
+shopt -s checkwinsize
+shopt -s histappend
+shopt -s extglob
+set -o vi
+
 # Per-host $PS1
 case "$(hostname -f)" in
-    *.(eqx|gyr|).*)
+    @(*.eqx.*|*.gyr.*))
     ;;
     *)
         PS1='\[\e[0;32m\]\u@\h:\[\e[1;34m\]\w \[\e[1;32m\]\$ \[\e[0;37m\]'
@@ -16,10 +23,6 @@ case "$(hostname -f)" in
         fi
     ;;
 esac
-
-# Shell options
-shopt -s cdspell histappend checkwinsize
-set -o vi
 
 # Aliases
 alias ls='ls -AF'
