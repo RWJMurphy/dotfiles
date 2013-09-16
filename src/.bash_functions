@@ -71,3 +71,15 @@ function syntax-sh() {
     done
     return $exit_code
 }
+
+syntax-vcl() {
+    exit_code=0
+    check="/usr/local/opt/varnish/sbin/varnishd -C -f "
+    while [[ $# > 0 ]]; do
+        if ! $check $1 > /dev/null; then
+            let exit_code++
+        fi
+        shift
+    done
+    return $exit_code
+}
