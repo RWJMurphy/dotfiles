@@ -26,7 +26,7 @@ set background=dark
 colorscheme solarized
 
 " Highlight long lines
-highlight OverLength ctermbg=darkred ctermfg=white guibg=#FFD9D9
+highlight OverLength ctermbg=darkred guibg=#FFD9D9
 match OverLength /\%73v.\+/
 
 " Filetypes
