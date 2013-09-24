@@ -1,4 +1,28 @@
 # vim: ft=sh sw=4 ts=4
+function note() {
+    NOTE_DIR=~/notes
+    [ ! -d $NOTE_DIR ] && mkdir -p $NOTE_DIR
+
+    subject=$*
+    timestamp=$(date +'%Y/%m/%d %H:%M:%S')
+    TEMPLATE="# ${subject:nil}
+**Date**: ${timestamp}
+
+"
+    notefile=$NOTE_DIR/notes_$(date +'%Y_%m_%d').md
+    line_no=$(grep -nF "# ${subject:nil}" $notefile 2>/dev/null | cut -d:  -f1 | head -1)
+    [ "$line_no" == "" ] && line_no=0
+    [ -f $notefile ] && TEMPLATE="\n$TEMPLATE"
+
+    if [ "$line_no" == "0" ]; then
+        echo -e "$TEMPLATE" >> $notefile
+        line_no=
+    else
+        let line_no+=3
+    fi
+    $EDITOR $notefile +$line_no
+}
+
 function mcd() {
     exit_code=1
     [ $# == 0 ] && return $exit_code
