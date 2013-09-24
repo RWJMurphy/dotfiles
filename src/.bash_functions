@@ -79,6 +79,13 @@ function syntax-json() {
     done
 }
 
+function syntax-ruby() {
+    while [[ $# > 0 ]]; do
+        ruby -c $1 > /dev/null
+        shift
+    done
+}
+
 function syntax-sh() {
     exit_code=0
     while [[ $# > 0 ]]; do
