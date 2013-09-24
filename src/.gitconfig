@@ -10,3 +10,5 @@
 
 [merge]
     defaultToUpstream = true
+[push]
+    default = simple
