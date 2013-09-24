@@ -2,7 +2,7 @@
 export AWS_CONFIG_FILE=~/.awsrc
 export CLICOLOR=1
 export EDITOR=vim
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 export VISUAL=vim
 
 # Shell options
