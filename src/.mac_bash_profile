@@ -1,4 +1,7 @@
-export PATH=/opt/local/bin:/opt/local/sbin:$PATH
-[ -f $(brew --prefix)/etc/bash_completion ] && . $(brew --prefix)/etc/bash_completion
+if [ "$(uname -s)" == "Darwin" ]; then
+    export PATH=/opt/local/bin:/opt/local/sbin:$PATH
+    [ -f $(brew --prefix)/etc/bash_completion ] && . $(brew --prefix)/etc/bash_completion
+    hash chruby >/dev/null 2>&1 && chruby 1.9.3
 
-shopt -s nocaseglob
+    shopt -s nocaseglob
+fi
