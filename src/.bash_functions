@@ -67,7 +67,70 @@ function ffind() {
     fi
 }
 
+function retry() {
+    # retry [--limit,-l] [--delay,-d] [--] command args..
+    [ $# -lt 1 ] && echo "return [-ld] [--] commands [args...]" >&2 && return
+
+    LIMIT=5
+    DELAY=5
+    while [[ $# > 0 ]]; do
+        case $1 in
+            --limit|-l)
+                shift
+                LIMIT=$1
+                ;;
+            --delay|-d)
+                shift
+                DELAY=$1
+                ;;
+            --)
+                shift
+                break
+                ;;
+            *)
+                break
+                ;;
+        esac
+        shift
+    done
+    command=$1;shift
+    args="$*"
+
+    success=1
+    while true; do
+        $command $args
+        success=$?
+        [ $success -eq 0 ] && break
+        let LIMIT--
+        [ $LIMIT -lt 1 ] && break
+        sleep $DELAY
+    done
+}
+
 # Syntax checks
+
+function syntax() {
+    while [[ $# > 0 ]]; do
+        case $1 in
+            *.rb)
+                syntax-ruby $1
+                ;;
+            *.sh)
+                syntax-sh $1
+                ;;
+            *.json)
+                syntax-json $1
+                ;;
+            *.vcl)
+                syntax-vcl $1
+                ;;
+            *)
+                echo "Not sure how to validate $1" >&2
+                ;;
+        esac
+        shift
+    done
+}
 
 function syntax-json() {
     while [[ $# > 0 ]]; do
