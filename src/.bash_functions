@@ -61,9 +61,12 @@ function mcd() {
 
 function ffind() {
     if hash locate 2>/dev/null; then
+        db=$(locate -S | grep -E "^Database" | cut -d\  -f2 | sed 's/://')
+        db_modtime=$(date -r $(stat -f '%m' $db) +'%Y-%m-%d %H:%M:%S')
+        echo "Using db $db, $db_modtime" >&2
         locate -i "$@" | grep -E "^${PWD}"
     else
-        echo "Requires locate, sorry :(" >&2
+        find "$PWD" -iname "*$@*"
     fi
 }
 
