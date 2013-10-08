@@ -102,7 +102,8 @@ function retry() {
         success=$?
         [ $success -eq 0 ] && break
         let LIMIT--
-        [ $LIMIT -lt 1 ] && break
+        [ $LIMIT -eq 0 ] && break
+        echo "failed -- sleeping for $DELAY" >&2
         sleep $DELAY
     done
 }
