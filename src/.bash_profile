@@ -1,3 +1,8 @@
+# useful
+function __source_if_exists() {
+    [ -f $1 ] && . $1
+}
+
 # Environment vars
 export AWS_CONFIG_FILE=~/.awsrc
 export CLICOLOR=1
@@ -34,7 +39,7 @@ fi
 
 [ -e $HOME/.bash_functions ] && . $HOME/.bash_functions
 
-[ -e /usr/local/opt/chruby/share/chruby/chruby.sh ] && . /usr/local/opt/chruby/share/chruby/chruby.sh
+__source_if_exists /usr/local/opt/chruby/share/chruby/chruby.sh && chruby 1.9
 
 # Finally, per-host stuff
 case "$(hostname -f)" in
@@ -51,3 +56,6 @@ case "$(hostname -f)" in
     *)
     ;;
 esac
+
+# Really finally (shh), include any local, non-git-managed config
+__source_if_exists $HOME/.bash_profile_local
