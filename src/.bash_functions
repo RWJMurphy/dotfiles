@@ -128,10 +128,32 @@ function syntax() {
             *.vcl)
                 syntax-vcl $1
                 ;;
+            *.pp)
+                syntax-puppet $1
+                ;;
             *)
                 echo "Not sure how to validate $1" >&2
                 ;;
         esac
+        shift
+    done
+}
+
+function syntax-puppet() {
+    case $(puppet --version) in
+        2.*)
+            puppet="puppet --parseonly"
+            ;;
+        3.*)
+            puppet="puppet parser validate"
+            ;;
+        *)
+            echo "Unsupported puppet version." >&2
+            return 1;
+            ;;
+    esac
+    while [[ $# > 0 ]]; do
+        $puppet $1
         shift
     done
 }
