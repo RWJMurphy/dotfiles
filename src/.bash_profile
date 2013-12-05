@@ -4,11 +4,17 @@ function __source_if_exists() {
 }
 
 # Environment vars
+export HISTFILESIZE=4000000000
+export HISTSIZE=10000
+export HISTCONTROL="ignorespace:ignoredups"
+export PROMPT_COMMAND="history -a"
+
 export AWS_CONFIG_FILE=~/.awsrc
 export CLICOLOR=1
 export EDITOR=vim
 export PATH=$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 export VISUAL=vim
+[ -d ~/gocode ] && export GOPATH=~/gocode
 
 # Shell options
 shopt -s cdspell
@@ -31,6 +37,7 @@ esac
 
 # Aliases
 alias ls='ls -AF'
+alias tree='tree -CF --dirsfirst'
 
 # Misc includes
 if [ -e $HOME/.mac_bash_profile ]; then
