@@ -1,3 +1,5 @@
+execute pathogen#infect()
+
 set nocompatible
 filetype plugin indent on
 syntax on
@@ -25,10 +27,10 @@ set modelines=10
 set background=dark
 colorscheme solarized
 
-" Highlight long lines
-highlight OverLength ctermbg=darkred guibg=#FFD9D9
-match OverLength /\%73v.\+/
-
 " Filetypes
 autocmd BufNewFile,BufRead *.json set ft=javascript
 autocmd BufNewFile,BufRead *.md set ft=markdown
+
+autocmd FileType ruby setlocal ts=2 sw=2 expandtab
+autocmd FileType json setlocal ts=2 sw=2 expandtab
+autocmd FileType yaml setlocal ts=2 sw=2 expandtab
