@@ -1,4 +1,10 @@
 # vim: ft=sh sw=4 ts=4
+function kid() {
+    query="$*"
+    q_b64=$(echo -n "$*" | base64 | tr -d "\n")
+    curl -s http://www.commandlinefu.com/commands/matching/$query/$q_b64/json | jq -r 'sort_by(.votes | tonumber) | reverse | .[:5][] | "#" + .summary + " (" + .votes + ")", .command, ""'
+
+}
 function note() {
     NOTE_DIR=~/notes
     [ ! -d $NOTE_DIR ] && mkdir -p $NOTE_DIR
