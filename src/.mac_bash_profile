@@ -10,7 +10,7 @@ if [ "$(uname -s)" == "Darwin" ]; then
         tmpfile=$(mktemp -t md_preview)
         mv $tmpfile $tmpfile.html
         tmpfile=$tmpfile.html
-        pandoc $path > $tmpfile
+        pandoc --from markdown --to html $path > $tmpfile
         open $tmpfile
         sleep 1
         rm $tmpfile
