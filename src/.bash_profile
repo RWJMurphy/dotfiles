@@ -39,6 +39,8 @@ esac
 alias ls='ls -AF'
 alias tree='tree -CF --dirsfirst'
 
+alias be='bundle exec'
+
 # Misc includes
 if [ -e $HOME/.mac_bash_profile ]; then
     . $HOME/.mac_bash_profile
