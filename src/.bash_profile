@@ -47,6 +47,7 @@ if [ -e $HOME/.mac_bash_profile ]; then
 fi
 
 [ -e $HOME/.bash_functions ] && . $HOME/.bash_functions
+[ -e $HOME/.withenv.bash ] && . $HOME/.withenv.bash
 
 __source_if_exists /usr/local/opt/chruby/share/chruby/chruby.sh && chruby 1.9
 
