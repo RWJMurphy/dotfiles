@@ -29,6 +29,17 @@ function note() {
     $EDITOR $notefile +$line_no
 }
 
+function notev() {
+    NOTE_DIR=~/notes
+    if [ "$1" != "" ]; then
+        notefile=$(grep -il "$*" $NOTE_DIR/notes_*.md | head -1)
+    fi
+    if [ "$notefile" == "" ]; then
+        notefile=$(ls $NOTE_DIR/notes_*.md | head -1)
+    fi
+    md_preview $notefile
+}
+
 function mcd() {
     exit_code=1
     [ $# == 0 ] && return $exit_code
