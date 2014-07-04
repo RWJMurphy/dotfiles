@@ -12,7 +12,7 @@ warn() {
 }
 
 backup() {
-    while [[ "$#" ]]; do
+    while [[ $# != 0 ]]; do
         backup_dest=$1.$TIMESTAMP
         warn "Moving $1 to $backup_dest"
         mv $1 $backup_dest
