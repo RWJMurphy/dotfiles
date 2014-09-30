@@ -9,12 +9,11 @@ export HISTSIZE=10000
 export HISTCONTROL="ignorespace:ignoredups"
 export PROMPT_COMMAND="history -a"
 
-export AWS_CONFIG_FILE=~/.awsrc
 export CLICOLOR=1
 export EDITOR=vim
 export PATH=$HOME/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 export VISUAL=vim
-[ -d ~/gocode ] && export GOPATH=~/gocode
+[ -d ~/gocode ] && export GOPATH=~/gocode && export GOBIN=${GOPATH}/bin && export PATH=${GOBIN}:$PATH
 
 # Shell options
 shopt -s cdspell
@@ -22,6 +21,9 @@ shopt -s checkwinsize
 shopt -s histappend
 shopt -s extglob
 set -o vi
+
+# Bash completion
+complete -C aws_completer aws
 
 # Per-host $PS1
 case "$(hostname -f)" in
@@ -49,7 +51,7 @@ fi
 [ -e $HOME/.bash_functions ] && . $HOME/.bash_functions
 [ -e $HOME/.withenv.bash ] && . $HOME/.withenv.bash
 
-__source_if_exists /usr/local/opt/chruby/share/chruby/chruby.sh && chruby 1.9
+__source_if_exists /usr/local/opt/chruby/share/chruby/chruby.sh && chruby 2.1
 
 # Finally, per-host stuff
 case "$(hostname -f)" in
