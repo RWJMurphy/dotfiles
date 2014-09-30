@@ -32,10 +32,10 @@ function note() {
 function notev() {
     NOTE_DIR=~/notes
     if [ "$1" != "" ]; then
-        notefile=$(grep -il "$*" $NOTE_DIR/notes_*.md | head -1)
+        notefile=$(grep -il "$*" $NOTE_DIR/notes_*.md | tail -1)
     fi
     if [ "$notefile" == "" ]; then
-        notefile=$(ls $NOTE_DIR/notes_*.md | head -1)
+        notefile=$(ls $NOTE_DIR/notes_*.md | tail -1)
     fi
     md_preview $notefile
 }
@@ -89,7 +89,7 @@ function ffind() {
 
 function retry() {
     # retry [--limit,-l] [--delay,-d] [--] command args..
-    [ $# -lt 1 ] && echo "return [-ld] [--] commands [args...]" >&2 && return
+    [ $# -lt 1 ] && echo "return [--limit MAX_TRIES] [--delay SECONDS] [--] commands [args...]" >&2 && return
 
     LIMIT=5
     DELAY=5
@@ -125,6 +125,17 @@ function retry() {
         [ $LIMIT -eq 0 ] && break
         echo "failed -- sleeping for $DELAY" >&2
         sleep $DELAY
+    done
+}
+
+function srm {
+    while [[ $# > 0 ]]; do
+        fsize=$(stat -f '%z' "$1")
+        for x in {1..5}; do
+            dd if=/dev/random of="$1" count=1 bs=$fsize conv=notrunc >/dev/null 2>&1
+        done
+        rm -f "$1"
+        shift
     done
 }
 
@@ -219,4 +230,9 @@ syntax-vcl() {
         shift
     done
     return $exit_code
+}
+
+akamai_curl() {
+    curl -i -H "Pragma: akamai-x-cache-on, akamai-x-cache-remote-on, akamai-x-check-cacheable, akamai-x-get-cache-key, akamai-x-get-extracted-values, akamai-x-get-nonces, akamai-x-get-ssl-client-session-id, akamai-x-get-true-cache-key, akamai-x-serial-no" "$@"
+    echo
 }
