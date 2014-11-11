@@ -260,3 +260,36 @@ git-filespark() {
     return $exit_code
 }
 
+gos() {
+    # ahahaha wtf reed
+    imports=()
+    while [[ $# > 0 ]]; do
+        case $1 in
+            --import|-i)
+                shift
+                imports+=($1)
+                ;;
+            --)
+                break
+                ;;
+            *)
+                break
+                ;;
+        esac
+        shift
+    done
+    f=$(mktemp -t goscript)
+    mv $f ${f}.go
+    f=${f}.go
+    echo "package main" >> $f
+    for i in "${imports[@]}"; do
+        echo "import \"$i\"" >> $f
+    done
+    echo "func main() { " >> $f
+    echo "$*" >> $f
+    echo "}" >> $f
+    go run $f
+    if [ $? -eq 0 ]; then
+        rm $f
+    fi
+}
