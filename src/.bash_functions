@@ -245,3 +245,18 @@ yaml2json() {
     ruby -rJSON -rYAML -e 'puts JSON.pretty_generate(YAML.load(STDIN.read))'
 }
 
+git-filespark() {
+    exit_code=0;
+    path="$1";
+    if [ -z "$path" ]; then
+        exit_code=1;
+        echo "$0 [path]";
+        return $exit_code;
+    fi;
+    echo -n "+ ";
+    git log --oneline --numstat --follow "$path" | grep -F "$path" | cut -f1 | spark;
+    echo -n "- ";
+    git log --oneline --numstat --follow "$path" | grep -F "$path" | cut -f2 | sed -e 's/^/-/' | spark;
+    return $exit_code
+}
+
