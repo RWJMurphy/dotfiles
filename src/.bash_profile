@@ -103,20 +103,20 @@ if [ "$BASH" != "" ]; then
     function set_bash_prompt {
         last_exit_code=$?
         find_git_branch
-        PS1="${Black}${On_White}\\t${Color_Off}"
-        PS1+=" \\u@\\h:\\W${Color_Off}"
+        PS1="\\[${Black}${On_White}\\]\\t"
+        PS1+=" \\[${Color_Off}\\]\\u@\\h:\\W"
         if [ "${git_branch}" != "" ]; then
-            PS1+=" ${Blue}(${git_branch}"
+            PS1+=" \\[${Blue}\\](${git_branch}"
             if ! git diff --quiet --ignore-submodules HEAD; then
-                PS1+="${BIPurple}*"
+                PS1+="\\[${BIPurple}\\]*"
             fi
-            PS1+="${Blue})${Color_Off}"
+            PS1+="\\[${Blue}\\])"
         fi
 
         if [ "${last_exit_code}" != "0" ]; then
-            PS1+=" ${BIRed}${last_exit_code}${Color_Off}"
+            PS1+=" \\[${BIRed}\\]${last_exit_code}"
         fi
-        PS1+=" \\$ "
+        PS1+="\\[${Color_Off}\\] \\$ "
         export PS1
     }
     export PROMPT_COMMAND+="; set_bash_prompt"
