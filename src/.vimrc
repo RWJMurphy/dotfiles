@@ -23,7 +23,7 @@ set modelines=10
 
 " Colors
 set background=dark
-colorscheme solarized
+"colorscheme solarized
 
 " Columns
 2mat ErrorMsg '\%81v.'
