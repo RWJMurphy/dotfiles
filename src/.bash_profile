@@ -104,7 +104,7 @@ if [ "$BASH" != "" ]; then
         last_exit_code=$?
         find_git_branch
         PS1="\\[${Black}${On_White}\\]\\t"
-        PS1+=" \\[${Color_Off}\\]\\u@\\h:\\W"
+        PS1+="\\[${Color_Off}\\] \\u@\\h:\\W"
         if [ "${git_branch}" != "" ]; then
             PS1+=" \\[${Blue}\\](${git_branch}"
             if ! git diff --quiet --ignore-submodules HEAD; then
